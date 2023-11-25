@@ -1,0 +1,78 @@
+<%- extend('../base_admin') -%>
+
+  <div class="row">
+    <div class="col-xl">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bx bx-plus me-1"></i>
+            Ajouter une stage
+          </h5>
+          <a 
+            href="<%= routedebase %>/stage_management/stage_list" 
+            class="dt-button btn btn-outline-secondary">
+            <span>
+              Liste des stages
+            </span>
+          </a>
+        </div>
+        <div class="card-body">
+          <form method="post" action="<%= routedebase %>/stage_management/add_stage">
+            <% if (locals.error) { %>
+              <div class="alert alert-danger">
+                <i class="bx bx-error me-1"></i>
+                <%= error %>
+              </div>
+            <% } %>
+            <div class="mb-3 row">
+              <div class="col-md-6">
+                <label class="form-label" for="application_id">Stage</label>
+                <div class="input-group input-group-merge">
+                  <span id="application_id_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <select id="application_id" name="application_id" class="select2 form-select">
+                    <option value="">Selectionner une stage</option>
+                    <% for(s of stages) { %>
+                      <% if (locals.rbody) { %>
+                        <% if (s.id == rbody.application_id) { %>
+                          <option value="<%= s.id %>" selected><%= s.code %> - <%= s.label.toUpperCase() %></option>
+                        <% } else { %>
+                          <option value="<%= s.id %>"><%= s.code %> - <%= s.label.toUpperCase() %></option>
+                        <% } %>
+                      <% } else { %>
+                        <option value="<%= s.id %>"><%= s.code %> - <%= s.label.toUpperCase() %></option>
+                      <% } %>
+                    <% } %>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="label">Libellé</label>
+                <div class="input-group input-group-merge">
+                  <span id="label_icon" class="input-group-text"><i class="bx bx-label"></i></span>
+                  <input type="text" id="label" name="label" class="form-control" placeholder="Ouverture et Clôture de compte" required
+                    aria-label="Ouverture et Clôture de compte" aria-describedby="label_icon" 
+                    value="<% if (locals.rbody) { %><%= rbody.label %><% } %>"/>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 row justify-content-center">
+              <div class="col-md-12"><label class="form-label" for="description">Description</label>
+                <div class="input-group input-group-merge">
+                  <span id="description_icon" class="input-group-text"><i class="bx bx-comment"></i></span>
+                  <textarea id="description" name="description" class="form-control"
+                    placeholder="Le compte bancaire s’ouvre le même jour, à condition de fournir toute la documentation requise."
+                    aria-label="Le compte bancaire s’ouvre le même jour, à condition de fournir toute la documentation requise."
+                    aria-describedby="description_icon"><% if (locals.rbody) { %><%= rbody.description %><% } %></textarea>
+                </div>
+              </div>
+
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="bx bx-send me-1"></i>
+              Soumettre
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

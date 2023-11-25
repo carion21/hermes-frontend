@@ -1,0 +1,185 @@
+<%- extend('../base_admin') -%>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bx bx-user me-1"></i>
+            Détails de la demande
+            <b>
+              <%= deliveryrequest.code %>
+            </b>
+          </h5>
+          <a 
+            href="<%= routedebase %>/deliveryrequest_management/deliveryrequest_list" 
+            class="dt-button btn btn-outline-secondary">
+            <span>
+              Retour
+          </a>
+        </div>
+        
+        <!-- Account -->
+        <div class="card-body">
+          <div class="d-flex align-items-start align-items-sm-center gap-4">
+            <div class="button-wrapper">
+              <button disabled class="btn btn-lg btn-<%= badges[deliveryrequest.delivery_status_id.toString()] %>">
+                <%= labels[deliveryrequest.delivery_status_id.toString()] %>
+              </button>
+            </div>
+            <div class="button-wrapper">
+            </div>
+          </div>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body">
+          <form id="" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="stage_code">Code Application</label>
+                <div class="input-group input-group-merge">
+                  <span id="stage_code_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <input type="text" id="stage_code" name="stage_code" class="form-control" disabled value="<%= deliveryrequest.application.code %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="stage_name">Nom Application</label>
+                <div class="input-group input-group-merge">
+                  <span id="stage_name_icon" class="input-group-text"><i class="bx bx-label"></i></span>
+                  <input type="text" id="stage_name" name="stage_name" class="form-control" disabled value="<%= deliveryrequest.application.label %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="code">Code Demande</label>
+                <div class="input-group input-group-merge">
+                  <span id="code_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <input type="text" id="code" name="code" class="form-control" disabled value="<%= deliveryrequest.code %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="article_label">Libellé article</label>
+                <div class="input-group input-group-merge">
+                  <span id="article_label_icon" class="input-group-text"><i class="bx bx-label"></i></span>
+                  <input type="text" id="article_label" name="article_label" class="form-control" disabled value="<%= deliveryrequest.article_label %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="article_quantity">Quantité article</label>
+                <div class="input-group input-group-merge">
+                  <span id="article_quantity_icon" class="input-group-text"><i class="bx bx-cart"></i></span>
+                  <input type="text" id="article_quantity" name="article_quantity" class="form-control" disabled value="<%= deliveryrequest.article_quantity %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="price_without_tax">Prix HT (Hors Taxes)</label>
+                <div class="input-group input-group-merge">
+                  <span id="price_without_tax_icon" class="input-group-text"><i class="bx bx-money"></i></span>
+                  <input type="number" id="price_without_tax" name="price_without_tax" class="form-control" disabled
+                    value="<%= deliveryrequest.price_without_tax %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="price_without_tax">Prix TTC (Toutes Taxes Comprises)</label>
+                <div class="input-group input-group-merge">
+                  <span id="price_with_tax_icon" class="input-group-text"><i class="bx bx-money"></i></span>
+                  <input type="number" id="price_with_tax" name="price_with_tax" class="form-control" disabled
+                    value="<%= deliveryrequest.price_with_tax %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="delivery_fees">Frais de livraison</label>
+                <div class="input-group input-group-merge">
+                  <span id="delivery_fees_icon" class="input-group-text"><i class="bx bx-money"></i></span>
+                  <input type="number" id="delivery_fees" name="delivery_fees" class="form-control" disabled
+                    value="<%= deliveryrequest.delivery_fees %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="delivery_date">Date de livraison prévue</label>
+                <div class="input-group input-group-merge">
+                  <span id="delivery_date_icon" class="input-group-text"><i class="bx bx-calendar"></i></span>
+                  <input type="text" id="delivery_date" name="delivery_date" class="form-control" disabled value="<%= deliveryrequest.delivery_date %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="client_name">Nom du client</label>
+                <div class="input-group input-group-merge">
+                  <span id="client_name_icon" class="input-group-text"><i class="bx bx-user"></i></span>
+                  <input type="text" id="client_name" name="client_name" class="form-control" disabled 
+                    value="<%= gender_labels[deliveryrequest.client_gender] %> <%= deliveryrequest.client_name %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label class="form-label" for="client_phone">Contact du client</label>
+                <div class="input-group input-group-merge">
+                  <span id="client_phone_icon" class="input-group-text"><i class="bx bx-phone"></i></span>
+                  <input type="text" id="client_phone" name="client_phone" class="form-control phone-mask" disabled
+                    value="<%= deliveryrequest.client_phone %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="client_address">Adresse de livraison</label>
+                <div class="input-group input-group-merge">
+                  <span id="client_address_icon" class="input-group-text"><i class="bx bx-pin"></i></span>
+                  <textarea disabled id="client_address" name="client_address" class="form-control"><%= deliveryrequest.client_address %></textarea>
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="mentions">Mentions utiles</label>
+                <div class="input-group input-group-merge">
+                  <span id="mentions_icon" class="input-group-text"><i class="bx bx-comment"></i></span>
+                  <textarea disabled id="mentions" name="mentions" class="form-control"><%= deliveryrequest.mentions %></textarea>
+                </div>
+              </div>
+            </div>
+            <hr class="my-3" />
+            <div class="mb-3 row justify-content-around">
+              <div class="col-md-12 col-12 mb-md-0 mb-4">
+                <h5 class="">Livreur assigné</h5>
+                <div class="card-body">
+                  <p>
+                    Vous pouvez voir les détails du livreur assigné à cette demande ci-dessous.
+                    <br>
+                    Au besoin, vous pouvez modifier le livreur assigné à cette demande en cliquant sur le bouton "Révoquer l'attribution" ci-dessous.
+                  </p>
+                  <!-- Connections -->
+                  <% if (locals.deliverybook) { %>
+                    <div class="d-flex mb-3">
+                      <div class="flex-grow-1 row">
+                        <div class="col-9 mb-sm-0 mb-2">
+                          <h6 class="mb-0">
+                            <%= deliverybook.deliveryman.lastname %> <%= deliverybook.deliveryman.fisrtname %>
+                          </h6>
+                          <small class="text-muted">
+                            <%= deliverybook.deliveryman.code %>
+                          </small>
+                        </div>
+                        <div class="col-3 text-end">
+                          <a class="btn btn-outline-primary" 
+                            href="<%= routedebase %>/deliveryman_management/view_deliveryman/<%= deliverybook.deliveryman.id %>">
+                            <i class="bx bx-run me-2"></i>
+                            Détails livreur
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  <% } else { %>
+                    <div class="alert alert-warning">
+                      <h6 class="alert-heading fw-bold mb-1">
+                        Aucun livreur assigné
+                      </h6>
+                      <p class="mb-0">
+                        Aucun livreur n'est actuellement assigné à cette demande.
+                      </p>
+                    </div>
+                  <% } %>
+                  <!-- /Connections -->
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /Account -->
+      </div>
+    </div>
+  </div>

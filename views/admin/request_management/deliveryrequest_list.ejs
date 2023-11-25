@@ -1,0 +1,100 @@
+<%- extend('../base_admin') -%>
+
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <div class="card-header row justify-content-around">
+        <div class="col-4 text-start">
+          <h5 class="card-title">Liste des demandes de livraisons</h5>
+        </div>
+        <div class="col-8 text-end">
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+  
+          <% if (locals.deliveryrequests && deliveryrequests.length> 0) { %>
+            <table class="table border-top" id="deliveryrequest_list">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Application</th>
+                  <th>Article</th>
+                  <th>Client</th>
+                  <th>Date ajoût</th>
+                  <th>Date livraison</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                <% for(d of deliveryrequests) { %>
+                  <tr>
+                    <td>
+                      <%= d.code %>
+                    </td>
+                    <td>
+                      <%= d.application.label.toUpperCase() %>
+                    </td>
+                    <td>
+                      <%= d.article_label %> (Qté: <%= d.article_quantity %>)
+                    </td>
+                    <td>
+                      <%= gender_labels[d.client_gender] %> <%= d.client_name %>
+                    </td>
+                    <td>
+                      <%= moment(d.created_at).format('DD/MM/YYYY HH:mm') %>
+                    </td>
+                    <td>
+                      <%= moment(d.delivery_date).format('DD/MM/YYYY') %>
+                    </td>
+                    <td>
+                      <span class="badge bg-label-<%= badges[d.delivery_status_id.toString()] %> me-1">
+                        <%# d.delivery_status_label %>
+                        <%= labels[d.delivery_status_id.toString()] %>
+                      </span>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" 
+                            href="<%= routedebase %>/deliveryrequest_management/view_deliveryrequest/<%= d.id %>">
+                            <i class="bx bx-show me-1"></i>
+                            Détails
+                          </a>
+                      </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+            <% } else { %>
+              <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">
+                      <%= locals.error %>
+                    </span>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="alert alert-warning">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">Aucune demande n'a été trouvée</span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Basic Bootstrap Table -->

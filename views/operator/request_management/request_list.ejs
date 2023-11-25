@@ -1,0 +1,92 @@
+<%- extend('../base_operator') -%>
+
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <div class="card-header row justify-content-around">
+        <div class="col-4 text-start">
+          <h5 class="card-title">Liste des requêtes de réclamation</h5>
+        </div>
+        <div class="col-8 text-end">
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+  
+          <% if (locals.requests && requests.length> 0) { %>
+            <table class="table border-top" id="request_list">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Sujet</th>
+                  <th>Client</th>
+                  <th>Date création</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                <% for(r of requests) { %>
+                  <tr>
+                    <td>
+                      <%= r.code %>
+                    </td>
+                    <td>
+                      <%= r.main_stage.label.toUpperCase() %>
+                    </td>
+                    <td>
+                     <%= r.client.lastname %> <%= r.client.firstname %>
+                    </td>
+                    <td>
+                      <%= moment(r.created_at).format('DD/MM/YYYY HH:mm') %>
+                    </td>
+                    <td>
+                      <span class="badge bg-label-<%= badges[r.actual_evolution.status_id.toString()] %> me-1">
+                        <%# r.delivery_status_label %>
+                        <%= labels[r.actual_evolution.status_id.toString()] %>
+                      </span>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" 
+                            href="<%= routedebase %>/request_management/view_request/<%= r.id %>">
+                            <i class="bx bx-show me-1"></i>
+                            Détails
+                          </a>
+                      </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+            <% } else { %>
+              <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">
+                      <%= locals.error %>
+                    </span>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="alert alert-warning">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">Aucune demande n'a été trouvée</span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Basic Bootstrap Table -->

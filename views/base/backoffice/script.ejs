@@ -1,0 +1,66 @@
+<!-- build:js assets/vendor/js/core.js -->
+<script src="/templates/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/templates/assets/vendor/libs/popper/popper.js"></script>
+<script src="/templates/assets/vendor/js/bootstrap.js"></script>
+<script src="/templates/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="/templates/assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+<script src="/templates/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+<!-- Main JS -->
+<script src="/templates/assets/js/main.js"></script>
+
+<!-- Page JS -->
+<script src="/templates/assets/js/dashboards-analytics.js"></script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- BS table js -->
+<script src="/templates/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+
+<!-- Page JS -->
+<!-- <script src="/templates/assets/js/docs.js"></script> -->
+<!-- <script src="/templates/assets/js/docs-tables-datatables.js"></script> -->
+
+<!-- <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.jqueryui.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+  integrity="sha512-uKQ39gEGiyUJl4AI6L+ekBdGKpGw4xJ55+xyJG7YFlJokPNYegn9KwQ3P8A7aFQAUtUsAQHep+d/lrGqrbPIDQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  // let entity_list = new DataTable('#entity_list');
+
+  var table_ids = [
+    'entity_list',
+    'admin_list',
+    'application_list',
+    'operator_list',
+    'client_list',
+    'request_list',
+  ];
+
+  table_ids.forEach(table_id => {
+    $('#' + table_id).DataTable({
+      "language": {
+        "search": '<i class="fas fa-search"></i>',
+        "paginate": {
+          "first": '<i class="fas fa-angle-double-left"></i>',
+          "last": '<i class="fas fa-angle-double-right"></i>',
+          "next": '<i class="fas fa-angle-right"></i>',
+          "previous": '<i class="fas fa-angle-left"></i>'
+        },
+        "sort": '<i class="fas fa-sort"></i>',
+        "sortAscending": '<i class="fas fa-sort-up"></i>',
+        "sortDescending": '<i class="fas fa-sort-down"></i>'
+      }
+    });
+  });
+
+</script>
+

@@ -1,0 +1,110 @@
+<%- extend('../base_admin') -%>
+
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <div class="card-header row justify-content-around">
+        <div class="col-4 text-start">
+          <h5 class="card-title">Liste des stages</h5>
+        </div>
+        <div class="col-8 text-end">
+          <a 
+          href="<%= routedebase %>/stage_management/add_stage" 
+          class="dt-button create-new btn btn-primary">
+            <span>
+              <i class="bx bx-plus me-1"></i>
+              Ajouter une stage
+          </a>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+  
+          <% if (locals.stages && stages.length> 0) { %>
+            <table class="table border-top" id="stage_list">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Libellé</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                <% for(a of stages) { %>
+                  <tr>
+                    <td>
+                      <%= a.code %>
+                    </td>
+                    <td>
+                      <%= a.label %>
+                    </td>
+                    <td>
+                      <% if (a.is_active) { %>
+                        <span class="badge bg-label-success me-1">Active</span>
+                      <% } else { %>
+                        <span class="badge bg-label-danger me-1">Inactive</span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" 
+                            href="<%= routedebase %>/stage_management/view_stage/<%= a.id %>">
+                            <i class="bx bx-show me-1"></i>
+                            Détails
+                          </a>
+                          <a class="dropdown-item" 
+                            href="<%= routedebase %>/stage_management/edit_stage/<%= a.id %>">
+                            <i class="bx bx-edit-alt me-1"></i>
+                            Modifier
+                          </a>
+                          <% if (a.is_active) { %>
+                            <a class="dropdown-item" 
+                              href="<%= routedebase %>/stage_management/disable_stage/<%= a.id %>">
+                              <i class="bx bx-x me-1"></i>
+                              Désactiver
+                            </a>
+                          <% } else { %>
+                            <a class="dropdown-item" 
+                              href="<%= routedebase %>/stage_management/enable_stage/<%= a.id %>">
+                              <i class="bx bx-check me-1"></i>
+                              Activer
+                            </a>
+                          <% } %>
+                      </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+            <% } else { %>
+              <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">
+                      <%= locals.error %>
+                    </span>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="alert alert-warning">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">Aucune stage n'a été trouvée</span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Basic Bootstrap Table -->

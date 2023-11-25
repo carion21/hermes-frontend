@@ -1,0 +1,119 @@
+<%- extend('../base_admin') -%>
+
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <div class="card-datatable table-responsive">
+      <div class="card-header row justify-content-around">
+        <div class="col-4 text-start">
+          <h5 class="card-title">Liste des attributions</h5>
+        </div>
+        <div class="col-8 text-end">
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+  
+          <% if (locals.deliverybooks && deliverybooks.length> 0) { %>
+            <div class="table-responsive text-nowrap">
+              <% if (locals.deliverybooks && deliverybooks.length> 0) { %>
+                <table class="table border-top" id="deliverybook_list">
+                  <thead>
+                    <tr>
+                      <th>Application</th>
+                      <th>Code Demande</th>
+                      <th>Livreur</th>
+                      <th>Date</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0">
+                    <% for(dbk of deliverybooks) { %>
+                      <tr>
+                        <td>
+                          <%= dbk.deliveryrequest.application.label.toUpperCase() %>
+                        </td>
+                        <td>
+                          <%= dbk.deliveryrequest.code %>
+                        </td>
+                        <td>
+                          <%= dbk.deliveryman.lastname %> <%= dbk.deliveryman.firstname %>
+                        </td>
+                        <td>
+                          <%= moment(dbk.created_at).format('DD/MM/YYYY HH:mm') %>
+                        </td>
+                        <td>
+                          <span class="badge bg-label-<%= badges[dbk.deliveryrequest.delivery_status_id.toString()] %> me-1">
+                            <%# d.delivery_status_label %>
+                            <%= labels[dbk.deliveryrequest.delivery_status_id.toString()] %>
+                          </span>
+                        </td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" 
+                                href="<%= routedebase %>/deliveryrequest_management/view_deliveryrequest/<%= dbk.deliveryrequest.id %>">
+                                <i class="bx bx-cart-alt me-1"></i>
+                                Détails demande
+                              </a>
+                              <a class="dropdown-item" 
+                                href="<%= routedebase %>/deliveryman_management/view_deliveryman/<%= dbk.deliveryman.id %>">
+                                <i class="bx bx-user me-1"></i>
+                                Détails livreur
+                              </a>
+                          </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <% } %>
+                  </tbody>
+                </table>
+                <% } else { %>
+                  <% if (locals.error) { %>
+                    <div class="alert alert-danger">
+                      <div class="alert-body text-center">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        <span class="ms-1">
+                          <%= locals.error %>
+                        </span>
+                      </div>
+                    </div>
+                  <% } else { %>
+                    <div class="alert alert-warning">
+                      <div class="alert-body text-center">
+                        <i class="fas fa-exclamation-triangle me-1"></i>
+                        <span class="ms-1">Aucune attribution enregistrée</span>
+                      </div>
+                    </div>
+                  <% } %>
+                <% } %>
+            </div>
+            <% } else { %>
+              <% if (locals.error) { %>
+                <div class="alert alert-danger">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">
+                      <%= locals.error %>
+                    </span>
+                  </div>
+                </div>
+              <% } else { %>
+                <div class="alert alert-warning">
+                  <div class="alert-body text-center">
+                    <i class="fas fa-exclamation-triangle me-1"></i>
+                    <span class="ms-1">Aucune demande n'a été trouvée</span>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Basic Bootstrap Table -->

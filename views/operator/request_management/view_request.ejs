@@ -1,0 +1,236 @@
+<%- extend('../base_operator') -%>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bx bx-user me-1"></i>
+            Détails de la requête
+            <b>
+              <%= request.code %>
+            </b>
+          </h5>
+          <a 
+            href="<%= routedebase %>/request_management/request_list" 
+            class="dt-button btn btn-outline-secondary">
+            <span>
+              Retour
+          </a>
+        </div>
+        
+        <!-- Account -->
+        <div class="card-body">
+          <div class="d-flex align-items-start align-items-sm-center gap-4">
+            <div class="button-wrapper">
+              <button disabled class="btn btn-lg btn-<%= badges[request.actual_evolution.status_id.toString()] %>">
+                <%= labels[request.actual_evolution.status_id.toString()] %>
+              </button>
+            </div>
+            <div class="button-wrapper">
+              <a class="btn btn-primary" href="">
+                <i class="bx bx-comment me-2"></i>
+                Visualiser la discussion
+              </a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body">
+          <form id="" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="app_code">Code Stage</label>
+                <div class="input-group input-group-merge">
+                  <span id="app_code_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <input type="text" id="app_code" name="app_code" class="form-control" disabled value="<%= request.main_stage.code %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="app_name">Nom Stage</label>
+                <div class="input-group input-group-merge">
+                  <span id="app_name_icon" class="input-group-text"><i class="bx bx-label"></i></span>
+                  <input type="text" id="app_name" name="app_name" class="form-control" disabled value="<%= request.main_stage.label %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="code">Code Requête</label>
+                <div class="input-group input-group-merge">
+                  <span id="code_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <input type="text" id="code" name="code" class="form-control" disabled value="<%= request.code %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="code">Phase Requête</label>
+                <div class="input-group input-group-merge">
+                  <span id="code_icon" class="input-group-text"><i class="bx bx-cube"></i></span>
+                  <input type="text" id="code" name="code" class="form-control" disabled value="<%= request.request_type.label %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="client_name">Nom du client</label>
+                <div class="input-group input-group-merge">
+                  <span id="client_name_icon" class="input-group-text"><i class="bx bx-user"></i></span>
+                  <input type="text" id="client_name" name="client_name" class="form-control" disabled 
+                    value="<%= request.client.lastname %> <%= request.client.firstname %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="client_phone">Contact du client</label>
+                <div class="input-group input-group-merge">
+                  <span id="client_phone_icon" class="input-group-text"><i class="bx bx-phone"></i></span>
+                  <input type="text" id="client_phone" name="client_phone" class="form-control phone-mask" disabled
+                    value="<%= request.client.phone %>" />
+                </div>
+              </div>
+              <div class="mb-3 col-md-12">
+                <label class="form-label" for="mentions">Mentions utiles</label>
+                <div class="input-group input-group-merge">
+                  <span id="mentions_icon" class="input-group-text"><i class="bx bx-comment"></i></span>
+                  <textarea disabled id="mentions" name="mentions" class="form-control"><%= request.description %></textarea>
+                </div>
+              </div>
+            </div>
+            <% if (locals.permissions) { %>
+              <% var local_permissions = permissions[request.actual_evolution.status_id.toString()] %>
+              <% if (local_permissions) { %>
+                <hr class="my-3" />
+                <div class="mb-3 row justify-content-around">
+                  <div class="col-md-12 col-12 mb-md-0 mb-4">
+                    <h5 class="">
+                      Changement de statut
+                    </h5>
+                    <div class="card-body">
+                      <p>
+                        Vous pouvez changer le statut de la requête en cliquant sur le/les bouton(s) ci-dessous.
+                      </p>
+                      <!-- Connections -->
+                      <% if (locals.permissions) { %>
+                        <div class="d-flex mb-3">
+                          <div class="flex-grow-1 row">
+                            <% for(p of local_permissions) { %>
+                              <div class="col-3">
+                                <a class="btn btn-<%= badges[p] %> w-100" 
+                                  href="<%= routedebase %>/request_management/change_status/<%= request.id %>/<%= p %>">
+                                  <i class="bx bx-run me-2"></i>
+                                  <%= labels[p] %>
+                                </a>
+                              </div>
+                            <% } %>
+                          </div>
+                        </div>
+                      <% } %>
+                      <!-- /Connections -->
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+            <% } %>
+            <hr class="my-3" />
+              <div class="mb-3 row justify-content-around">
+                <div class="col-md-12 col-12 mb-md-0 mb-4">
+                  <h5 class="">
+                    Evolutions de la requête
+                  </h5>
+                  <div class="card-body">
+                    <p>
+                      Ce sont les différentes évolutions de la requête au cours du temps.
+                    </p>
+                    <!-- Connections -->
+                    <div class="table-responsive text-nowrap">
+                      <% if (request.evolution_list && request.evolution_list.length > 0) { %>
+                        <table class="table border-top" id="deliverybook_list">
+                          <thead>
+                            <tr>
+                              <th>Type Intervenant</th>
+                              <th>Code Intervenant</th>
+                              <th>Nom Intervenant</th>
+                              <th>Date</th>
+                              <th>Statut</th>
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0">
+                            <% for(ev of request.evolution_list) { %>
+                              <tr>
+                                <td>
+                                  <%= ev.operator.profile.toUpperCase() %>
+                                </td>
+                                <td>
+                                  <%= ev.operator.code %>
+                                </td>
+                                <td>
+                                  <%= ev.operator.lastname %> <%= ev.operator.firstname %>
+                                </td>
+                                <td>
+                                  <%= moment(ev.created_at).format('DD/MM/YYYY HH:mm') %>
+                                </td>
+                                <td>
+                                  <span class="badge bg-label-<%= badges[ev.status_id.toString()] %> me-1">
+                                    <%# d.delivery_status_label %>
+                                    <%= labels[ev.status_id.toString()] %>
+                                  </span>
+                                </td>
+                              </tr>
+                              <% } %>
+                          </tbody>
+                        </table>
+                        <% } else { %>
+                          <% if (locals.error) { %>
+                            <div class="alert alert-danger">
+                              <div class="alert-body text-center">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <span class="ms-1">
+                                  <%= locals.error %>
+                                </span>
+                              </div>
+                            </div>
+                          <% } else { %>
+                            <div class="alert alert-warning">
+                              <div class="alert-body text-center">
+                                <i class="fas fa-exclamation-triangle me-1"></i>
+                                <span class="ms-1">Aucune évolution enregistrée</span>
+                              </div>
+                            </div>
+                          <% } %>
+                        <% } %>
+                    </div>
+                    <!-- /Connections -->
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <!-- /Account -->
+      </div>
+      <% if (request._status_id == 0) { %>
+        <div class="card">
+          <h5 class="card-header">Annulation de la requête</h5>
+          <div class="card-body">
+            <div class="mb-3 col-12 mb-0">
+              <div class="alert alert-warning">
+                <h6 class="alert-heading fw-bold mb-1">
+                  Êtes-vous sûr de vouloir annuler cette requête?
+                </h6>
+                <p class="mb-0">
+                  <strong>Note:</strong> Cette action est irréversible. Une fois la requête annulée, vous ne pourrez plus la modifier ou la supprimer. Si vous souhaitez vraiment annuler la requête, veuillez cocher la case ci-dessous et cliquer sur le bouton "Annuler la requête".
+                </p>
+              </div>
+            </div>
+            <form method="post" action="<%= routedebase %>/request_management/cancel_request/<%= request.id %>">
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="confirmation" id="confirmation" value="true"
+                  required />
+                <label class="form-check-label" for="confirmation">
+                  Je confirme que je souhaite annuler cette requête.
+                </label>
+              </div>
+              <button type="submit" class="btn btn-danger">
+                <i class="bx bx-trash me-1"></i>
+                Annuler la requête
+              </button>
+            </form>
+          </div>
+        </div>
+      <% } %>
+    </div>
+  </div>

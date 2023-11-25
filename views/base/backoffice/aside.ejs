@@ -1,0 +1,46 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+  <div class="app-brand demo">
+    <a href="/" class="app-brand-link">
+      <span class="app-brand-logo demo">
+        <img width="40" height="40"
+          src="/templates/assets/img/elements/logo.png" alt="Brand Logo" class="img-fluid" />
+      </span>
+      <span class="app-brand-text demo menu-text fw-bolder ms-2">
+        <%= appName %>
+      </span>
+    </a>
+
+    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+      <i class="bx bx-chevron-left bx-sm align-middle"></i>
+    </a>
+  </div>
+
+  <div class="menu-inner-shadow"></div>
+
+  <ul class="menu-inner py-1">
+
+    <% for (bloc of tabside) { %>
+      <% if (bloc.texte !=="" ) { %>
+        <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">
+            <%= bloc.texte %>
+          </span>
+        </li>
+      <% } %>
+      <% for (elt of bloc.elements) { %>
+        <% var stext="" %>
+          <% if (elt.active==1) { %>
+            <% stext="active" %>
+          <% } %>
+          <li class="menu-item <%= stext %>">
+            <a href="<%=  elt.route %>" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-collection"></i>
+              <div data-i18n="Basic">
+                <%=  elt.texte %>
+              </div>
+            </a>
+          </li>
+      <% } %>
+    <% } %>
+  </ul>
+</aside>

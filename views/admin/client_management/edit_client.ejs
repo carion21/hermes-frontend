@@ -1,0 +1,86 @@
+<%- extend('../base_admin') -%>
+
+  <div class="row">
+    <div class="col-xl">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bx bx-plus me-1"></i>
+            Modifier un client
+          </h5>
+          <a 
+            href="<%= routedebase %>/client_management/client_list" 
+            class="dt-button btn btn-outline-secondary">
+            <span>
+              Retour
+            </span>
+          </a>
+        </div>
+        <div class="card-body">
+          <form method="post" action="<%= routedebase %>/client_management/edit_client/<%= client_id %>">
+            <% if (locals.error) { %>
+              <div class="alert alert-danger">
+                <i class="bx bx-error me-1"></i>
+                <%= error %>
+              </div>
+            <% } %>
+            <div class="mb-3 row">
+              <div class="col-md-4">
+                <label class="form-label" for="username">Nom d'utilisateur</label>
+                <div class="input-group input-group-merge">
+                  <span id="username_icon" class="input-group-text"><i class="bx bx-user"></i></span>
+                  <input type="text" id="username" name="username" class="form-control" placeholder="admin" required
+                    aria-label="admin" aria-describedby="username_icon" 
+                    value="<% if (locals.rbody) { %><%= rbody.username %><% } else { %><%= xclient.username %><% } %>"/>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="lastname">Nom</label>
+                <div class="input-group input-group-merge">
+                  <span id="lastname_icon" class="input-group-text"><i class="bx bx-user"></i></span>
+                  <input type="text" id="lastname" name="lastname" class="form-control" placeholder="John" required
+                    aria-label="John" aria-describedby="lastname_icon" 
+                    value="<% if (locals.rbody) { %><%= rbody.lastname %><% } else { %><%= xclient.lastname %><% } %>"/>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="firstname">Prenom</label>
+                <div class="input-group input-group-merge">
+                  <span id="firstname_icon" class="input-group-text"><i class="bx bx-user"></i></span>
+                  <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Doe" required
+                    aria-label="Doe" aria-describedby="firstname_icon" 
+                    value="<% if (locals.rbody) { %><%= rbody.firstname %><% } else { %><%= xclient.firstname %><% } %>"/>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4 row justify-content-around">
+              <div class="col-md-6">
+                <label class="form-label" for="email">Email</label>
+                <div class="input-group input-group-merge">
+                  <span id="email_icon" class="input-group-text"><i class="bx bx-envelope"></i></span>
+                  <input type="email" id="email" name="email" class="form-control" placeholder="john.doe"
+                    aria-label="john.doe" aria-describedby="email_icon" required
+                    value="<% if (locals.rbody) { %><%= rbody.email %><% } else { %><%= xclient.email %><% } %>"/>
+                  <span id="email_icon" class="input-group-text">@example.com</span>
+                </div>
+                <div class="form-text">You can use letters, numbers & periods</div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="phone">Telephone </label>
+                <div class="input-group input-group-merge">
+                  <span id="phone2" class="input-group-text"><i class="bx bx-phone"></i></span>
+                  <input type="text" id="phone" name="phone" class="form-control phone-mask" required
+                    placeholder="658 799 8941" aria-label="658 799 8941" aria-describedby="phone2" 
+                    value="<% if (locals.rbody) { %><%= rbody.phone %><% } else { %><%= xclient.phone %><% } %>"/>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="bx bx-send me-1"></i>
+              Soumettre
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

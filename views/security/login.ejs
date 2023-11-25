@@ -1,0 +1,79 @@
+<% extend('./base_login') %>
+
+  <div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <!-- Register -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Logo -->
+            <div class="app-brand justify-content-center">
+              <a href="/" class="app-brand-link gap-2">
+                <span class="app-brand-logo demo">
+                  <img width="40" height="40"
+                    src="/templates/assets/img/elements/logo.png" alt="Brand Logo" class="img-fluid" />
+                </span>
+                <span class="app-brand-text demo text-body fw-bolder">
+                  <%= appName %>
+                </span>
+              </a>
+            </div>
+            <!-- /Logo -->
+
+            <% if (locals.error) { %>
+              <div class="alert alert-danger">
+                <i class="bx bx-error-circle"></i>
+                <span>
+                  <%= locals.error %>
+                </span>
+              </div>
+            <% } else { %>
+              <h4 class="mb-2 text-center">
+                Bienvenue sur <%= appName %> 👋🎉
+              </h4>
+              <p class="mb-4 text-center">
+                S'il vous plaît connectez-vous à votre compte et commencez l'aventure
+              </p>
+            <% } %>
+
+            <form id="formAuthentication" class="mb-3" action="/security/login" method="POST">
+              <div class="mb-3">
+                <label for="username" class="form-label">
+                  Nom d'utilisateur ou email
+                </label>
+                <input type="text" class="form-control" id="email" name="username"
+                  placeholder="Enter your email ou nom d'utilisateur" autofocus />
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label" for="password">
+                    Mot de passe
+                  </label>
+                </div>
+                <div class="input-group input-group-merge">
+                  <input type="password" id="password" class="form-control" name="password"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password" />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember-me" />
+                  <label class="form-check-label" for="remember-me">
+                    Se souvenir de moi
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-primary d-grid w-100" type="submit">
+                  Se connecter
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /Register -->
+      </div>
+    </div>
+  </div>

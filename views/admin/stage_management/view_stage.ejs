@@ -1,0 +1,108 @@
+<%- extend('../base_admin') -%>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="bx bx-user me-1"></i>
+            Détails de la stage
+            <b>
+              <%= stage.name %>
+            </b>
+          </h5>
+          <a 
+            href="<%= routedebase %>/stage_management/stage_list" 
+            class="dt-button btn btn-outline-secondary">
+            <span>
+              <i class="bx bx-back me-1"></i>
+              Retour
+          </a>
+        </div>
+        <!-- Account -->
+        <div class="card-body">
+          <div class="d-flex align-items-start align-items-sm-center gap-4">
+            <div class="button-wrapper">
+              <a class="btn btn-primary"
+                href="<%= routedebase %>/stage_management/edit_stage/<%= stage.id %>">
+                <i class="bx bx-pencil me-2"></i>
+                Modifier la stage
+              </a>
+              <% if (stage.is_active) { %>
+                <a class="btn btn-warning"
+                  href="<%= routedebase %>/stage_management/disable_stage/<%= stage.id %>">
+                  <i class="bx bx-x me-2"></i>
+                  Désactiver la stage
+                </a>
+              <% } else { %>
+                <a class="btn btn-success"
+                  href="<%= routedebase %>/stage_management/enable_stage/<%= stage.id %>">
+                  <i class="bx bx-x me-2"></i>
+                  Activer la stage
+                </a>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body">
+          <form id="" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="code">Code</label>
+                <div class="input-group input-group-merge">
+                  <span id="code_icon" class="input-group-text"><i class="bx bx-buildings"></i></span>
+                  <input type="text" id="code" name="code" class="form-control" disabled
+                    value="<%= stage.code %>"/>
+                </div>
+              </div>
+              <div class="mb-3 col-md-6">
+                <label class="form-label" for="label">Libellé</label>
+                <div class="input-group input-group-merge">
+                  <span id="label_icon" class="input-group-text"><i class="bx bx-buildings"></i></span>
+                  <input type="text" id="label" name="label" class="form-control" disabled
+                    value="<%= stage.label %>"/>
+                </div>
+              </div>
+              <div class="mb-3 col-md-12">
+                <label class="form-label" for="description">Description</label>
+                <div class="input-group input-group-merge">
+                  <span id="description_icon" class="input-group-text"><i class="bx bx-comment"></i></span>
+                  <textarea disabled id="description" name="description" class="form-control"><%= stage.description %></textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- /Account -->
+      </div>
+      <div class="card">
+        <h5 class="card-header">Suppression de la stage</h5>
+        <div class="card-body">
+          <div class="mb-3 col-12 mb-0">
+            <div class="alert alert-warning">
+              <h6 class="alert-heading fw-bold mb-1">
+                Êtes-vous sûr de vouloir supprimer cette stage ?
+              </h6>
+              <p class="mb-0">
+                <strong>Note:</strong> Cette action est irréversible. Toutes les données associées à cette stage seront supprimées. Si vous souhaitez simplement désactiver la stage, vous pouvez le faire dans la section plus haut. Si vous souhaitez vraiment supprimer la stage, veuillez cocher la case ci-dessous et cliquer sur le bouton "Supprimer la stage".
+              </p>
+            </div>
+          </div>
+          <form method="post" action="<%= routedebase %>/stage_management/delete_stage/<%= stage.id %>">
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" name="confirmation" id="confirmation" value="true"
+                required/>
+              <label class="form-check-label" for="confirmation">
+                Je confirme que je souhaite supprimer cette stage.
+              </label>
+            </div>
+            <button type="submit" class="btn btn-danger">
+              <i class="bx bx-trash me-1"></i>
+              Supprimer la stage
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
